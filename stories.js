@@ -20,15 +20,15 @@ import './source/styles.css'
 import Zoom, { Controlled as ControlledZoom } from './source'
 
 const imgGlenorchyLagoon = {
-  alt: `Glenorchy lagoon, New Zealand by Robert Pearce`,
+  alt: 'Glenorchy lagoon, New Zealand by Robert Pearce',
   src: glenorchyLagoon,
 }
 const imgHobbiton = {
-  alt: `Hobbiton, Matamata, New Zealand by Andres Iga`,
+  alt: 'Hobbiton, Matamata, New Zealand by Andres Iga',
   src: hobbiton,
 }
 const imgHookerValleyTrack = {
-  alt: `Hooker Valley Track , New Zealand by Roll de Ram`,
+  alt: 'Hooker Valley Track , New Zealand by Roll de Ram',
   src: hookerValleyTrack,
 }
 const imgKea = {
@@ -36,61 +36,61 @@ const imgKea = {
   src: kea,
 }
 const imgNvidiaCard = {
-  alt: `NVIDIA Graphics Card`,
+  alt: 'NVIDIA Graphics Card',
   src: nvidiaCard,
 }
 const imgNzBeach = {
-  alt: `New Zealand Beach by Rod Long`,
+  alt: 'New Zealand Beach by Rod Long',
   src: nzBeach,
 }
 const imgQueenstown = {
-  alt: `Queenstown, New Zealand by Omer Faruk`,
+  alt: 'Queenstown, New Zealand by Omer Faruk',
   src: queenstown,
 }
 const imgTeAraiPoint = {
-  alt: `Te Arai Point, New Zealand by Douglas Bagg`,
+  alt: 'Te Arai Point, New Zealand by Douglas Bagg',
   src: teAraiPoint,
 }
 const imgTekapo = {
-  alt: `Lake Tekapo, New Zealand by Tobias Keller`,
+  alt: 'Lake Tekapo, New Zealand by Tobias Keller',
   src: tekapo,
 }
 const imgThatWanakaTree = {
-  alt: `That Wanaka Tree, New Zealand by Laura Smetsers`,
+  alt: 'That Wanaka Tree, New Zealand by Laura Smetsers',
   src: thatWanakaTree,
 }
 const imgPortWaikato = {
-  alt: `Port Waikato, Tuakau, Auckland, New Zealand by Petr Vysohlid`,
+  alt: 'Port Waikato, Tuakau, Auckland, New Zealand by Petr Vysohlid',
   src: portWaikato,
 }
 
 export default {
   component: Zoom,
-  title: `Zoom`,
+  title: 'Zoom',
 }
 
 export const Uncontrolled = () => {
   return (
-    <ImgStory title="Zoom an `img`">
+    <ImgStory title="Uncontrolled `<img />`">
       <Zoom
-        closeText={text(`Unzoom label`, `Unzoom image`)}
-        openText={text(`Zoom label`, `Zoom image`)}
+        closeText={text('Unzoom label', 'Unzoom image')}
+        openText={text('Zoom label', 'Zoom image')}
         overlayBgColorEnd={color(
-          `Overlay bgColor end`,
-          `rgba(255, 255, 255, 0.95)`
+          'Overlay bgColor end',
+          'rgba(255, 255, 255, 0.95)'
         )}
         overlayBgColorStart={color(
-          `Overlay bgColor start`,
-          `rgba(255, 255, 255, 0)`
+          'Overlay bgColor start',
+          'rgba(255, 255, 255, 0)'
         )}
-        transitionDuration={number(`Transition duration`, 300)}
-        zoomMargin={number(`Zoom margin`, 0, {
+        transitionDuration={number('Transition duration', 300)}
+        zoomMargin={number('Zoom margin', 0, {
           min: 0,
           max: 500,
           range: true,
           step: 50,
         })}
-        zoomZindex={number(`Zoom z-index`, 2147483647)}
+        zoomZindex={number('Zoom z-index', 2147483647)}
       >
         <div>
           <p>Something</p>
@@ -104,11 +104,45 @@ export const Uncontrolled = () => {
             <img
               alt={imgThatWanakaTree.alt}
               src={imgThatWanakaTree.src}
-              style={{ height: `100%`, maxWidth: `100%` }}
+              style={{ height: '100%', maxWidth: '100%' }}
               width="250"
             />
           </div>
         </div>
+      </Zoom>
+    </ImgStory>
+  )
+}
+
+export const UncontrolledImgGallery = () => {
+  return (
+    <ImgStory title="Uncontrolled `<img />` Gallery">
+      <Zoom>
+        <img
+          alt={imgThatWanakaTree.alt}
+          src={imgThatWanakaTree.src}
+          style={{ objectFit: 'cover', maxWidth: '100%' }}
+          width="250"
+          height="500"
+        />
+      </Zoom>
+      <Zoom>
+        <img
+          alt={imgGlenorchyLagoon.alt}
+          src={imgGlenorchyLagoon.src}
+          style={{ objectFit: 'cover', maxWidth: '100%' }}
+          width="250"
+          height="500"
+        />
+      </Zoom>
+      <Zoom>
+        <img
+          alt={imgHookerValleyTrack.alt}
+          src={imgHookerValleyTrack.src}
+          style={{ objectFit: 'cover', maxWidth: '100%' }}
+          width="250"
+          height="500"
+        />
       </Zoom>
     </ImgStory>
   )
@@ -173,32 +207,32 @@ const ImgStory = ({ desc, title, ...props }) => {
 
 
 //export const Picture = () => (
-//  <ImgStory title="Zoom a `picture` element with `img` and `source`">
+//  <ImgStory title="Zoom a `picture` element with `img` and `source'">
 //    <Zoom
-//      closeText={text(`Unzoom label`, `Unzoom image`)}
-//      openText={text(`Zoom label`, `Zoom image`)}
+//      closeText={text(`Unzoom label', 'Unzoom image')}
+//      openText={text('Zoom label', 'Zoom image')}
 //      overlayBgColorEnd={color(
-//        `Overlay bgColor end`,
-//        `rgba(255, 255, 255, 0.95)`
+//        'Overlay bgColor end',
+//        'rgba(255, 255, 255, 0.95)'
 //      )}
 //      overlayBgColorStart={color(
-//        `Overlay bgColor start`,
-//        `rgba(255, 255, 255, 0)`
+//        'Overlay bgColor start',
+//        'rgba(255, 255, 255, 0)'
 //      )}
-//      transitionDuration={number(`Transition duration`, 300, {
+//      transitionDuration={number('Transition duration', 300, {
 //        min: 0,
 //        max: 5000,
 //        range: true,
 //        step: 100,
 //      })}
-//      wrapElement={text(`Wrapper element`, `div`)}
-//      zoomMargin={number(`Zoom margin`, 0, {
+//      wrapElement={text('Wrapper element', 'div')}
+//      zoomMargin={number('Zoom margin', 0, {
 //        min: 0,
 //        max: 500,
 //        range: true,
 //        step: 50,
 //      })}
-//      zoomZindex={number(`Zoom z-index`, 2147483647, {
+//      zoomZindex={number('Zoom z-index', 2147483647, {
 //        min: 0,
 //        max: 2147483647,
 //        range: true,
@@ -210,7 +244,7 @@ const ImgStory = ({ desc, title, ...props }) => {
 //        <img
 //          alt={imgNzBeach.alt}
 //          src={imgNzBeach.src}
-//          style={{ height: `100%`, maxWidth: `100%` }}
+//          style={{ height: '100%', maxWidth: '100%' }}
 //          width="500"
 //        />
 //      </picture>
@@ -222,30 +256,30 @@ const ImgStory = ({ desc, title, ...props }) => {
 //  <ImgStory title="Zoom a `figure` element">
 //    <figure>
 //      <Zoom
-//        closeText={text(`Unzoom label`, `Unzoom image`)}
-//        openText={text(`Zoom label`, `Zoom image`)}
+//        closeText={text('Unzoom label', 'Unzoom image')}
+//        openText={text('Zoom label', 'Zoom image')}
 //        overlayBgColorEnd={color(
-//          `Overlay bgColor end`,
-//          `rgba(255, 255, 255, 0.95)`
+//          'Overlay bgColor end',
+//          'rgba(255, 255, 255, 0.95)'
 //        )}
 //        overlayBgColorStart={color(
-//          `Overlay bgColor start`,
-//          `rgba(255, 255, 255, 0)`
+//          'Overlay bgColor start',
+//          'rgba(255, 255, 255, 0)'
 //        )}
-//        transitionDuration={number(`Transition duration`, 300, {
+//        transitionDuration={number('Transition duration', 300, {
 //          min: 0,
 //          max: 5000,
 //          range: true,
 //          step: 100,
 //        })}
-//        wrapElement={text(`Wrapper element`, `div`)}
-//        zoomMargin={number(`Zoom margin`, 0, {
+//        wrapElement={text('Wrapper element', 'div')}
+//        zoomMargin={number('Zoom margin', 0, {
 //          min: 0,
 //          max: 500,
 //          range: true,
 //          step: 50,
 //        })}
-//        zoomZindex={number(`Zoom z-index`, 2147483647, {
+//        zoomZindex={number('Zoom z-index', 2147483647, {
 //          min: 0,
 //          max: 2147483647,
 //          range: true,
@@ -255,7 +289,7 @@ const ImgStory = ({ desc, title, ...props }) => {
 //        <img
 //          alt={imgHobbiton.alt}
 //          src={imgHobbiton.src}
-//          style={{ height: `100%`, maxWidth: `100%` }}
+//          style={{ height: '100%', maxWidth: '100%' }}
 //          width="500"
 //        />
 //      </Zoom>
@@ -287,9 +321,9 @@ export const ImgGalleryBgImages = () => {
       <h1>Image gallery using divs & background images</h1>
       <ul
         style={{
-          display: `flex`,
-          flexWrap: `wrap`,
-          listStyle: `none`,
+          display: 'flex',
+          flexWrap: 'wrap',
+          listStyle: 'none',
           margin: 0,
           padding: 0,
         }}
@@ -297,23 +331,23 @@ export const ImgGalleryBgImages = () => {
         {images.map((img, i) => (
           <li
             key={i}
-            style={{ margin: `0 1rem 1rem 0`, width: `calc(33% - 1rem)` }}
+            style={{ margin: '0 1rem 1rem 0', width: 'calc(33% - 1rem)' }}
           >
             <Zoom>
               <div
                 aria-label={img.alt}
                 role="img"
                 style={{
-                  backgroundColor: `#c2c2c2`,
+                  backgroundColor: '#c2c2c2',
                   backgroundImage: i === randomIndex
                     ? `linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url(${img.src})`
                     : `url(${img.src})`,
-                  backgroundPosition: `center center`,
-                  backgroundRepeat: `no-repeat`,
-                  backgroundSize: `cover`,
-                  height: `0`,
-                  paddingBottom: `66%`,
-                  width: `calc(100%)`,
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  height: '0',
+                  paddingBottom: '20%',
+                  width: '100%',
                 }}
               />
             </Zoom>
@@ -344,16 +378,16 @@ export const ImgGalleryBgImages = () => {
 //        return
 //      }
 
-//      if (e.key === `ArrowLeft` || e.keyCode === 37) {
+//      if (e.key === ArrowLeft || e.keyCode === 37) {
 //        setActiveIndex(Math.max(activeIndex - 1, 0))
-//      } else if (e.key === `ArrowRight` || e.keyCode === 39) {
+//      } else if (e.key === ArrowRight || e.keyCode === 39) {
 //        setActiveIndex(Math.min(activeIndex + 1, images.length - 1))
 //      }
 //    },
 //    [activeIndex, images.length]
 //  )
 
-//  useEvent(`keydown`, handleKeyDown, document)
+//  useEvent(keydown, handleKeyDown, document)
 
 //  return (
 //    <div>
@@ -364,9 +398,9 @@ export const ImgGalleryBgImages = () => {
 //      </p>
 //      <ul
 //        style={{
-//          display: `flex`,
-//          flexWrap: `wrap`,
-//          listStyle: `none`,
+//          display: flex,
+//          flexWrap: wrap,
+//          listStyle: none,
 //          margin: 0,
 //          padding: 0,
 //        }}
@@ -375,7 +409,7 @@ export const ImgGalleryBgImages = () => {
 //          return (
 //            <li
 //              key={`${i}-${img.src}`}
-//              style={{ margin: `0 1rem 1rem 0`, width: `calc(33% - 1rem)` }}
+//              style={{ margin: 0 1rem 1rem 0`, width: calc(33% - 1rem) }}
 //            >
 //              <ControlledZoom
 //                isZoomed={activeIndex === i}
@@ -387,20 +421,20 @@ export const ImgGalleryBgImages = () => {
 //                  }
 //                }}
 //                transitionDuration={0}
-//                wrapStyle={{ width: `100%` }}
+//                wrapStyle={{ width: 100% }}
 //              >
 //                <div
 //                  aria-label={img.alt}
 //                  role="img"
 //                  style={{
-//                    backgroundColor: `#c2c2c2`,
+//                    backgroundColor: #c2c2c2,
 //                    backgroundImage: `url(${img.src})`,
-//                    backgroundPosition: `center center`,
-//                    backgroundRepeat: `no-repeat`,
-//                    backgroundSize: `cover`,
-//                    height: `0`,
-//                    paddingBottom: `66%`,
-//                    width: `calc(100%)`,
+//                    backgroundPosition: center center,
+//                    backgroundRepeat: no-repeat,
+//                    backgroundSize: cover,
+//                    height: 0,
+//                    paddingBottom: 66%,
+//                    width: 100%,
 //                  }}
 //                />
 //              </ControlledZoom>
@@ -435,30 +469,30 @@ export const ImgGalleryBgImages = () => {
 //        </button>
 //      </div>
 //      <ControlledZoom
-//        closeText={text(`Unzoom label`, `Unzoom image`)}
-//        openText={text(`Zoom label`, `Zoom image`)}
+//        closeText={text('Unzoom label', 'Unzoom image')}
+//        openText={text('Zoom label', 'Zoom image')}
 //        overlayBgColorEnd={color(
-//          `Overlay bgColor end`,
-//          `rgba(255, 255, 255, 0.95)`
+//          'Overlay bgColor end',
+//          'rgba(255, 255, 255, 0.95)'
 //        )}
 //        overlayBgColorStart={color(
-//          `Overlay bgColor start`,
-//          `rgba(255, 255, 255, 0)`
+//          'Overlay bgColor start',
+//          'rgba(255, 255, 255, 0)'
 //        )}
-//        transitionDuration={number(`Transition duration`, 300, {
+//        transitionDuration={number('Transition duration', 300, {
 //          min: 0,
 //          max: 5000,
 //          range: true,
 //          step: 100,
 //        })}
-//        wrapElement={text(`Wrapper element`, `div`)}
-//        zoomMargin={number(`Zoom margin`, 0, {
+//        wrapElement={text('Wrapper element', 'div')}
+//        zoomMargin={number('Zoom margin', 0, {
 //          min: 0,
 //          max: 500,
 //          range: true,
 //          step: 50,
 //        })}
-//        zoomZindex={number(`Zoom z-index`, 2147483647, {
+//        zoomZindex={number('Zoom z-index', 2147483647, {
 //          min: 0,
 //          max: 2147483647,
 //          range: true,
@@ -471,7 +505,7 @@ export const ImgGalleryBgImages = () => {
 //          alt={imgThatWanakaTree.alt}
 //          onLoad={handleImgLoad}
 //          src={imgThatWanakaTree.src}
-//          style={{ height: `100%`, maxWidth: `100%` }}
+//          style={{ height: '100%', maxWidth: '100%' }}
 //          width="500"
 //        />
 //      </ControlledZoom>
@@ -483,46 +517,46 @@ export const ControlledSpecificKeys = () => {
   const [isZoomed, setIsZoomed] = useState(false)
 
   const handleKeyDown = useCallback(e => {
-    if (e.key === `j` || e.keyCode === 74) {
+    if (e.key === 'j' || e.keyCode === 74) {
       setIsZoomed(true)
-    } else if (e.key === `k` || e.keyCode === 75) {
+    } else if (e.key === 'k' || e.keyCode === 75) {
       setIsZoomed(false)
     }
   }, [])
 
-  useEvent(`keydown`, handleKeyDown, document)
+  useEvent('keydown', handleKeyDown, document)
 
   return (
     <ImgStory
-      desc="Use `j` to open and `k` to close"
+      desc="Use 'j' to open and 'k' to close"
       title="Image zoom using specific keys"
     >
       <ControlledZoom
-        closeText={text(`Unzoom label`, `Unzoom image`)}
-        openText={text(`Zoom label`, `Zoom image`)}
+        closeText={text('Unzoom label', 'Unzoom image')}
+        openText={text('Zoom label', 'Zoom image')}
         overlayBgColorEnd={color(
-          `Overlay bgColor end`,
-          `rgba(255, 255, 255, 0.95)`
+          'Overlay bgColor end',
+          'rgba(255, 255, 255, 0.95)'
         )}
         overlayBgColorStart={color(
-          `Overlay bgColor start`,
-          `rgba(255, 255, 255, 0)`
+          'Overlay bgColor start',
+          'rgba(255, 255, 255, 0)'
         )}
-        transitionDuration={number(`Transition duration`, 300)}
-        zoomMargin={number(`Zoom margin`, 0, {
+        transitionDuration={number('Transition duration', 300)}
+        zoomMargin={number('Zoom margin', 0, {
           min: 0,
           max: 500,
           range: true,
           step: 50,
         })}
-        zoomZindex={number(`Zoom z-index`, 2147483647)}
+        zoomZindex={number('Zoom z-index', 2147483647)}
         isZoomed={isZoomed}
         onZoomChange={Function.prototype /* do nothing */}
       >
         <img
           alt={imgThatWanakaTree.alt}
           src={imgThatWanakaTree.src}
-          style={{ height: `100%`, maxWidth: `100%` }}
+          style={{ height: '100%', maxWidth: '100%' }}
           width="250"
         />
       </ControlledZoom>
@@ -531,33 +565,33 @@ export const ControlledSpecificKeys = () => {
 }
 
 //export const LargerImageSize = () => (
-//  <div style={{ width: `720px`, margin: `0 auto` }}>
+//  <div style={{ width: '720px', margin: '0 auto' }}>
 //    <ImgStory title="Larger image size">
 //      <Zoom
-//        closeText={text(`Unzoom label`, `Unzoom image`)}
-//        openText={text(`Zoom label`, `Zoom image`)}
+//        closeText={text('Unzoom label', 'Unzoom image')}
+//        openText={text('Zoom label', 'Zoom image')}
 //        overlayBgColorEnd={color(
-//          `Overlay bgColor end`,
-//          `rgba(255, 255, 255, 0.95)`
+//          'Overlay bgColor end',
+//          'rgba(255, 255, 255, 0.95)'
 //        )}
 //        overlayBgColorStart={color(
-//          `Overlay bgColor start`,
-//          `rgba(255, 255, 255, 0)`
+//          'Overlay bgColor start',
+//          'rgba(255, 255, 255, 0)'
 //        )}
-//        transitionDuration={number(`Transition duration`, 300, {
+//        transitionDuration={number('Transition duration', 300, {
 //          min: 0,
 //          max: 5000,
 //          range: true,
 //          step: 100,
 //        })}
-//        wrapElement={text(`Wrapper element`, `div`)}
-//        zoomMargin={number(`Zoom margin`, 0, {
+//        wrapElement={text('Wrapper element', 'div')}
+//        zoomMargin={number('Zoom margin', 0, {
 //          min: 0,
 //          max: 500,
 //          range: true,
 //          step: 50,
 //        })}
-//        zoomZindex={number(`Zoom z-index`, 2147483647, {
+//        zoomZindex={number('Zoom z-index', 2147483647, {
 //          min: 0,
 //          max: 2147483647,
 //          range: true,

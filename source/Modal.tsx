@@ -6,6 +6,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react'
 import { useClickAway, useEvent, usePrevious } from 'react-use'
 import ICompress from './ICompress'
@@ -14,6 +15,8 @@ import getScaleToWindowMax from './getScaleToWindowMax'
 
 const SVG_REGEX = /\.svg$/i
 const URL_REGEX = /url(?:\(['"]?)(.*?)(?:['"]?\))/
+
+type ObjectFit = 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
 
 export interface ModalProps {
   closeText:            string
@@ -38,16 +41,36 @@ const Modal: FC<ModalProps> = ({
   transitionDuration,
   zoomMargin,
 }: ModalProps) => {
+  const [loadedImg, setLoadedImg] = useState<HTMLImageElement>(null)
+
   const refDialog    = useRef<HTMLDivElement>(null)
   const refImg       = useRef<HTMLImageElement>(null)
   const refBtnClose  = useRef<HTMLButtonElement>(null)
-  const prevIsActive = usePrevious(isZoomed)
+  const prevIsZoomed = usePrevious(isZoomed)
 
   const tabIndexBoundary = isZoomed ? 0 : undefined
   const tabIndexBtn      = isZoomed ? undefined : -1
   const tabIndexModal    = isZoomed ? -1 : undefined
 
   const imgRect = imgEl?.getBoundingClientRect()
+
+  const imgElComputedStyle = useMemo(() => {
+    return imgEl ? window.getComputedStyle(imgEl) : undefined
+  }, [imgEl])
+
+  const imgSrc = useMemo(() => {
+    const src = imgEl?.src
+
+    if (src) {
+      return src
+    }
+
+    const bgImg = imgElComputedStyle?.backgroundImage
+
+    if (bgImg) {
+      return URL_REGEX.exec(bgImg)?.[1]
+    }
+  }, [imgEl, imgElComputedStyle])
 
   const styleWrap: CSSProperties = isZoomed
     ? {
@@ -71,7 +94,7 @@ const Modal: FC<ModalProps> = ({
     }
 
   const styleModalImg: CSSProperties = useMemo(() => {
-    if (!imgEl || !imgRect) {
+    if (!loadedImg || !imgEl || !imgRect) {
       return { position: 'absolute' }
     }
 
@@ -93,11 +116,51 @@ const Modal: FC<ModalProps> = ({
       left:                imgRect.left + window.scrollX,
       width:               imgRect.width * scale,
       height:              imgRect.height * scale,
+      objectFit:           imgElComputedStyle?.objectFit as ObjectFit,
       transform:           `scale(${1 / scale}) translate(0,0)`,
       transitionDuration:  `${transitionDuration}ms`,
       transformOrigin:     'top left',
       transitionProperty:  'transform',
       willChange:          'transform',
+    }
+
+    if (imgEl.tagName === 'DIV' && loadedImg) {
+      const bgSize = imgElComputedStyle?.backgroundSize
+
+      if (bgSize === 'cover') {
+        let coverHeight  = 0
+        let coverWidth   = 0
+        let imgScale     = 1
+        const imgRatio   = loadedImg.width / loadedImg.height
+        const coverRatio = imgRect.width / imgRect.height
+
+        if (imgRatio > coverRatio) {
+          coverHeight = imgRect.height
+          imgScale = coverHeight / loadedImg.height
+          coverWidth = imgScale * loadedImg.width
+          style.height = coverHeight * scale
+          style.width = coverWidth * scale
+          console.log('first', style.width, style.height)
+        } else {
+          coverWidth = imgRect.width
+          imgScale = coverWidth / loadedImg.width
+          coverHeight = imgScale * loadedImg.height
+          style.height = coverHeight * scale
+          style.width = coverWidth * scale
+          console.log('second', style.width, style.height)
+        }
+      } else if (bgSize === 'contain') {
+        //w = img.width
+        //h = img.height
+        //var newW, newH
+        //if(w > h){
+        //    newW = $0.offsetWidth
+        //    newH = h / w * newW
+        //} else {
+        //    newH = $0.offsetHeight
+        //    newW = w / h * newH
+        //}
+      }
     }
 
     if (isZoomed) {
@@ -112,7 +175,15 @@ const Modal: FC<ModalProps> = ({
     }
 
     return style
-  }, [ imgEl, imgRect, isZoomed, transitionDuration, zoomMargin ])
+  }, [
+    imgEl,
+    imgElComputedStyle,
+    imgRect,
+    isZoomed,
+    loadedImg,
+    transitionDuration,
+    zoomMargin,
+  ])
 
   const handleFocusBoundary = useCallback(() => {
     refBtnClose.current?.focus({ preventScroll: true })
@@ -136,17 +207,17 @@ const Modal: FC<ModalProps> = ({
       return
     }
 
-    if (!prevIsActive && isZoomed) {
+    if (!prevIsZoomed && isZoomed) {
       imgEl.style.visibility = 'hidden'
-    } else if (prevIsActive && !isZoomed) {
+    } else if (prevIsZoomed && !isZoomed) {
       window.setTimeout(() => {
         imgEl.style.visibility = ''
       }, Math.max(transitionDuration - 50, 0))
     }
-  }, [imgEl, isZoomed, prevIsActive, transitionDuration])
+  }, [imgEl, isZoomed, prevIsZoomed, transitionDuration])
 
   useLayoutEffect(() => {
-    if (!prevIsActive && isZoomed) {
+    if (!prevIsZoomed && isZoomed) {
       refBtnClose.current?.focus({ preventScroll: true })
       window.addEventListener('scroll', onClose, { capture: false, passive: true })
     }
@@ -154,18 +225,21 @@ const Modal: FC<ModalProps> = ({
     return () => {
       window.removeEventListener('scroll', onClose)
     }
-  }, [isZoomed, onClose, prevIsActive])
+  }, [isZoomed, onClose, prevIsZoomed])
 
   useEvent('click', handleClickTrigger, refImg.current)
   useEvent('keydown', handleKeyDown, document)
   useClickAway(refDialog, onClose)
 
-
-  let foo = undefined
-
-  if (imgEl) {
-    foo = URL_REGEX.exec(window.getComputedStyle(imgEl).backgroundImage)?.[1]
-  }
+  useEffect(() => {
+    if (imgSrc) {
+      const img = new Image()
+      img.src = imgSrc
+      img.onload = () => {
+        setLoadedImg(img)
+      }
+    }
+  }, [imgSrc])
 
   return (
     <div data-rmiz-portal-content style={styleWrap}>
@@ -194,7 +268,7 @@ const Modal: FC<ModalProps> = ({
           data-rmiz-modal-img
           ref={refImg}
           sizes={imgEl?.sizes}
-          src={imgEl?.src || foo}
+          src={imgSrc}
           srcSet={imgEl?.srcset}
           style={styleModalImg}
         />
