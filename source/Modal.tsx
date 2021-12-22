@@ -41,7 +41,7 @@ const Modal: FC<ModalProps> = ({
   transitionDuration,
   zoomMargin,
 }: ModalProps) => {
-  const [loadedImg, setLoadedImg] = useState<HTMLImageElement>(null)
+  const [loadedImg, setLoadedImg] = useState<HTMLImageElement>()
 
   const refDialog    = useRef<HTMLDivElement>(null)
   const refImg       = useRef<HTMLImageElement>(null)
@@ -78,7 +78,7 @@ const Modal: FC<ModalProps> = ({
       visibility: 'visible',
     }
     : {
-      transition: `visibility 0s ease ${transitionDuration}ms`,
+      //transition: `visibility 0s ease ${transitionDuration}ms`,
       visibility: 'hidden',
     }
 
@@ -116,7 +116,7 @@ const Modal: FC<ModalProps> = ({
       left:                imgRect.left + window.scrollX,
       width:               imgRect.width * scale,
       height:              imgRect.height * scale,
-      objectFit:           imgElComputedStyle?.objectFit as ObjectFit,
+      //objectFit:           imgElComputedStyle?.objectFit as ObjectFit,
       transform:           `scale(${1 / scale}) translate(0,0)`,
       transitionDuration:  `${transitionDuration}ms`,
       transformOrigin:     'top left',
@@ -124,44 +124,82 @@ const Modal: FC<ModalProps> = ({
       willChange:          'transform',
     }
 
-    if (imgEl.tagName === 'DIV' && loadedImg) {
-      const bgSize = imgElComputedStyle?.backgroundSize
+    const objectFit = imgElComputedStyle?.objectFit
 
-      if (bgSize === 'cover') {
-        let coverHeight  = 0
-        let coverWidth   = 0
-        let imgScale     = 1
-        const imgRatio   = loadedImg.width / loadedImg.height
-        const coverRatio = imgRect.width / imgRect.height
+    if (objectFit === 'cover') {
+      let coverHeight  = 0
+      let coverWidth   = 0
+      let imgScale     = 1
+      const imgRatio   = loadedImg.width / loadedImg.height
+      const coverRatio = imgRect.width / imgRect.height
 
-        if (imgRatio > coverRatio) {
-          coverHeight = imgRect.height
-          imgScale = coverHeight / loadedImg.height
-          coverWidth = imgScale * loadedImg.width
-          style.height = coverHeight * scale
-          style.width = coverWidth * scale
-          console.log('first', style.width, style.height)
-        } else {
-          coverWidth = imgRect.width
-          imgScale = coverWidth / loadedImg.width
-          coverHeight = imgScale * loadedImg.height
-          style.height = coverHeight * scale
-          style.width = coverWidth * scale
-          console.log('second', style.width, style.height)
-        }
-      } else if (bgSize === 'contain') {
-        //w = img.width
-        //h = img.height
-        //var newW, newH
-        //if(w > h){
-        //    newW = $0.offsetWidth
-        //    newH = h / w * newW
-        //} else {
-        //    newH = $0.offsetHeight
-        //    newW = w / h * newH
-        //}
+      if (imgRatio > coverRatio) {
+        coverHeight = imgRect.height
+        imgScale = coverHeight / loadedImg.height
+        coverWidth = imgScale * loadedImg.width
+        style.height = coverHeight * scale
+        style.width = coverWidth * scale
+        console.log('first', style.width, style.height)
+      } else {
+        coverWidth = imgRect.width
+        imgScale = coverWidth / loadedImg.width
+        coverHeight = imgScale * loadedImg.height
+        style.height = coverHeight * scale
+        style.width = coverWidth * scale
+        console.log('second', style.width, style.height)
       }
+    } else if (objectFit === 'contain') {
+      //w = img.width
+      //h = img.height
+      //var newW, newH
+      //if(w > h){
+      //    newW = $0.offsetWidth
+      //    newH = h / w * newW
+      //} else {
+      //    newH = $0.offsetHeight
+      //    newW = w / h * newH
+      //}
     }
+
+
+    //if (imgEl.tagName === 'DIV' && loadedImg) {
+    //  const bgSize = imgElComputedStyle?.backgroundSize
+
+    //  if (bgSize === 'cover') {
+    //    let coverHeight  = 0
+    //    let coverWidth   = 0
+    //    let imgScale     = 1
+    //    const imgRatio   = loadedImg.width / loadedImg.height
+    //    const coverRatio = imgRect.width / imgRect.height
+
+    //    if (imgRatio > coverRatio) {
+    //      coverHeight = imgRect.height
+    //      imgScale = coverHeight / loadedImg.height
+    //      coverWidth = imgScale * loadedImg.width
+    //      style.height = coverHeight * scale
+    //      style.width = coverWidth * scale
+    //      console.log('first', style.width, style.height)
+    //    } else {
+    //      coverWidth = imgRect.width
+    //      imgScale = coverWidth / loadedImg.width
+    //      coverHeight = imgScale * loadedImg.height
+    //      style.height = coverHeight * scale
+    //      style.width = coverWidth * scale
+    //      console.log('second', style.width, style.height)
+    //    }
+    //  } else if (bgSize === 'contain') {
+    //    //w = img.width
+    //    //h = img.height
+    //    //var newW, newH
+    //    //if(w > h){
+    //    //    newW = $0.offsetWidth
+    //    //    newH = h / w * newW
+    //    //} else {
+    //    //    newH = $0.offsetHeight
+    //    //    newW = w / h * newH
+    //    //}
+    //  }
+    //}
 
     if (isZoomed) {
       const viewportX    = window.innerWidth  / 2
